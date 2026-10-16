@@ -1,0 +1,42 @@
+name: Build and release Windows executable
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run tests
+        shell: pwsh
+        run: |
+          python -m pip install -r requirements.txt
+          python -m unittest discover -s tests -v
+
+      - name: Prepare build environment
+        shell: pwsh
+        run: python -m venv .venv-build
+
+      - name: Build executable
+        shell: pwsh
+        run: .\build.ps1
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: dist/GTIC-Diagnostico.exe

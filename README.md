@@ -48,6 +48,28 @@ c:\IT-Automacao\
 
 ## 🛠️ Execução
 
+### Executar num Windows sem Python
+
+Na secção **Releases** do repositório, descarregue `GTIC-Diagnostico.exe` e execute-o. O executável inclui o Python e as dependências; não é necessário instalar Python no computador de destino. Os relatórios ficam em `Documentos\GTIC-Relatorios`.
+
+Para gerar o executável a partir do código, num Windows com Python 3 instalado, execute na pasta do projeto:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\build.ps1
+```
+
+O ficheiro será criado em `dist\GTIC-Diagnostico.exe`. Distribua esse ficheiro, não a pasta `build`. O build deve ser feito no sistema operativo de destino: para Linux ou macOS é necessário um processo de build próprio nessa plataforma.
+
+Depois de publicar estas alterações no GitHub, crie e envie uma tag para gerar uma Release automaticamente:
+
+```powershell
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+A GitHub Action executa os testes, compila o executável em Windows e anexa `GTIC-Diagnostico.exe` à Release. O ficheiro ficará disponível na secção **Releases** do repositório.
+
 ### 1. Executar o Diagnóstico
 
 ```powershell

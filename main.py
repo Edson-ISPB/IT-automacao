@@ -135,7 +135,11 @@ def main():
     now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
     hostname_clean = "".join(c for c in system["hostname"] if c.isalnum() or c in ("-", "_"))
 
-    output_dir = Path("reports")
+    if getattr(sys, "frozen", False):
+        output_dir = Path.home() / "Documents" / "GTIC-Relatorios"
+    else:
+        output_dir = Path(__file__).resolve().parent / "reports"
+
     output_html_timestamped = output_dir / f"diagnostico_{hostname_clean}_{now_str}.html"
     output_html_latest = output_dir / "diagnostico_latest.html"
     output_json_latest = output_dir / "diagnostico_latest.json"

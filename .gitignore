@@ -1,5 +1,9 @@
 .venv/ 
+.venv-build/
 __pycache__/ 
 reports/ 
+build/
+dist/
+*.spec
 *.pyc 
 Git/
